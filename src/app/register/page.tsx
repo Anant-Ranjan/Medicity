@@ -24,8 +24,8 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const payload: any = { ...formData };
-      if (payload.role !== "hospital_admin") delete payload.tenantId;
+      const { tenantId, ...restOfData } = formData;
+      const payload = formData.role === "hospital_admin" ? { ...formData } : restOfData;
 
       const res = await fetch("/api/auth/register", {
         method: "POST",
